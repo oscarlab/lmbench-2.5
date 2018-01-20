@@ -143,7 +143,9 @@ run lat_syscall open $STAT
 
 #select file (500), select tcp (500)
 run lat_select file 500
-run lat_select tcp 500
+
+# DP 1/20/18: This test intermittently hangs on SGX, taking out of CI for now
+#run lat_select tcp 500
 
 #sig install, sig_overhead, prot. Fault
 run lat_sig install
