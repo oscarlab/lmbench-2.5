@@ -161,8 +161,9 @@ done
 #forks
 cp hello /tmp/hello
 ## DEP 12/9/17: Temporarliy remove vfork from the unit tests
+## DEP 6/16/18: Temporarliy remove shell from the unit tests
 #for i in fork dfork vfork exec dforkexec shell
-for i in fork dfork exec dforkexec shell
+for i in fork dfork exec dforkexec 
 do	run lat_proc $i
 done
 rm -f /tmp/hello
