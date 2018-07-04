@@ -152,11 +152,12 @@ run lat_sig install
 run lat_sig catch
 run lat_sig prot lat_sig
 
+# DP 7/4/18: This test intermittently hangs on SGX, taking out of CI for now
 #AF_UNIX
-echo AF_UNIX socket latency
-for i in $(eval echo "{1..$N_RUNS}")
-do	run lat_unix
-done
+#echo AF_UNIX socket latency
+#for i in $(eval echo "{1..$N_RUNS}")
+#do	run lat_unix
+#done
 
 #forks
 cp hello /tmp/hello
