@@ -136,117 +136,117 @@ function run {
 function af_unix {
 # DP 7/4/18: This test intermittently hangs on SGX, taking out of CI for now
 #AF_UNIX
-        echo AF_UNIX socket latency
-        for i in $(eval echo "{1..$N_RUNS}")
-        do      run lat_unix
-        done
+	echo AF_UNIX socket latency
+	for i in $(eval echo "{1..$N_RUNS}")
+	do	run lat_unix
+	done
 }
 
 
 function wr_bw {
-        for i in $(eval echo "{1..$N_RUNS}")
-        do      rm -f $FILE
-                run lmdd label="File $FILE write bandwidth:" of=$FILE move=${MB}m fsync=1 print=3
-        done
+	for i in $(eval echo "{1..$N_RUNS}")
+	do	rm -f $FILE
+		run lmdd label="File $FILE write bandwidth:" of=$FILE move=${MB}m fsync=1 print=3
+	done
 }
 
 function udp_soc_lat {
-        echo UDP socket latency
-        run lat_udp -s &
-        sleep 3
-        for i in $(eval echo "{1..$N_RUNS}")
-        do      run lat_udp 127.0.0.1
-                sleep 1
-        done
-        run lat_udp -127.0.0.1
-        sleep 3
+	echo UDP socket latency
+	run lat_udp -s &
+	sleep 3
+	for i in $(eval echo "{1..$N_RUNS}")
+	do	run lat_udp 127.0.0.1
+		sleep 1
+	done
+	run lat_udp -127.0.0.1
+	sleep 3
 }
 
 function tcp_soc_lat {
-        echo TCP socket latency
-        run lat_tcp -s &
-        sleep 3
-        for i in $(eval echo "{1..$N_RUNS}")
-        do      run lat_tcp 127.0.0.1
-                sleep 1
-        done
-        run lat_tcp -127.0.0.1
-        sleep 3
+	echo TCP socket latency
+	run lat_tcp -s &
+	sleep 3
+	for i in $(eval echo "{1..$N_RUNS}")
+	do	run lat_tcp 127.0.0.1
+		sleep 1
+	done
+	run lat_tcp -127.0.0.1
+	sleep 3
 }
 
 function tcp_con_lat {
-        echo TCP connect latency
-        run lat_connect -s &
-        sleep 3
-        run lat_connect 127.0.0.1
-        sleep 1
-        run lat_connect -127.0.0.1
-        sleep 3
+	echo TCP connect latency
+	run lat_connect -s &
+	sleep 3
+	run lat_connect 127.0.0.1
+	sleep 1
+	run lat_connect -127.0.0.1
+	sleep 3
 }
 
 function tcp_soc_bw {
-        echo TCP socket bandwidth
-        run bw_tcp -s &
-        sleep 3
-        for i in $(eval echo "{1..$N_RUNS}")
-        do      run bw_tcp 127.0.0.1
-                sleep 1
-        done
-        run bw_tcp -127.0.0.1
-        sleep 3
+	echo TCP socket bandwidth
+	run bw_tcp -s &
+	sleep 3
+	for i in $(eval echo "{1..$N_RUNS}")
+	do	run bw_tcp 127.0.0.1
+		sleep 1
+	done
+	run bw_tcp -127.0.0.1
+	sleep 3
 }
 
 function bw_unix {
-        for i in $(eval echo "{1..$N_RUNS}")
-        do      run bw_unix
-        done
+	for i in $(eval echo "{1..$N_RUNS}")
+	do	run bw_unix
+	done
 }
 
 function bw_pipe {
-        for i in $(eval echo "{1..$N_RUNS}")
-        do      run bw_pipe
-        done
+	for i in $(eval echo "{1..$N_RUNS}")
+	do	run bw_pipe
+	done
 }
 
 
 declare -a tests=(\
-                        "lat_syscall null" \
-                        "lat_syscall read" \
-                        "lat_syscall write" \
-                        "lat_syscall stat $STAT" \
-                        "lat_syscall fstat $STAT" \
-                        "lat_syscall open $STAT" \
-                        "lat_select file 500" \
+			"lat_syscall null" \
+			"lat_syscall read" \
+			"lat_syscall write" \
+			"lat_syscall stat $STAT" \
+			"lat_syscall fstat $STAT" \
+			"lat_syscall open $STAT" \
+			"lat_select file 500" \
 # DP 1/20/18: This test intermittently hangs on SGX, taking out of CI for now
-#                       "lat_select tcp 500" \
-                        "lat_sig install" \
-                        "lat_sig catch"	\
-                        "lat_sig prot lat_sig" \
-                        "lat_proc fork" \
+#			"lat_select tcp 500" \
+			"lat_sig install" \
+			"lat_sig catch"	\
+			"lat_sig prot lat_sig" \
+			"lat_proc fork" \
 ## DEP 6/16/18: Temporarily remove dfork from the unit tests
-#                       "lat_proc dfork" \
+#			"lat_proc dfork" \
 ## DEP 12/9/17: Temporarily remove vfork from the unit tests
-#                       "lat_proc vfork" \
-                       "lat_proc exec" \
+#			"lat_proc vfork" \
+		       "lat_proc exec" \
 ## DEP 6/19/18: Temporarily remove dforkexec from the unit tests
-#                       "lat_proc dforkexec" \
+#			"lat_proc dforkexec" \
 ## DEP 6/16/18: Temporarily remove shell from the unit tests
-#                       "lat_proc shell" \
-                        "lat_fs $FSDIR"
-                );
+#			"lat_proc shell" \
+			"lat_fs $FSDIR"
+		);
 
 declare -a test_funcs=(\
 # DP 7/4/18: This test intermittently hangs on SGX, taking out of CI for now
-#                       "af_unix" \
-                        "wr_bw" \
-                        "udp_soc_lat" \
-                        "tcp_soc_lat" \
-                        "tcp_con_lat" \
-                        "tcp_soc_bw" \
-                        "bw_unix" \
+#			"af_unix" \
+			"wr_bw" \
+			"udp_soc_lat" \
+			"tcp_soc_lat" \
+			"tcp_con_lat" \
+			"tcp_soc_bw" \
+			"bw_unix" \
 ## DEP 1/20/18: Temporarliy remove bw_pipe from the unit tests - intermittent hangs
-#                       "bw_pipe" \
-                );
+#			"bw_pipe" \
+		);
 
 date
 echo Latency measurements
