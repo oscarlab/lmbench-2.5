@@ -122,7 +122,10 @@ then
 	exit 1
 fi
 
-cp hello /tmp/hello
+if [ ! -f "/tmp/hello" ]
+then
+	cp hello /tmp/hello
+fi
 
 function run {
 	echo "$@"
@@ -278,8 +281,6 @@ do
 	echo "Calling ${test_funcs[$i]}"
 	${test_funcs[$i]}
 done
-
-rm -f /tmp/hello
 
 exit 0
 
